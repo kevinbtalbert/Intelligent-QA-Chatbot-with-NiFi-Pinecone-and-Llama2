@@ -5,7 +5,7 @@ description: |
 author: Cloudera Inc.
 specification_version: 1.0
 prototype_version: 1.0
-date: "2023-10-02"
+date: "2024-03-25"
 
 environment_variables:
   USE_CML_MODELS:

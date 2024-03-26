@@ -61,6 +61,14 @@ tasks:
     cpu: 2
     memory: 16
 
+  - type: run_session
+    name: Setup Chroma Vector DB
+    script: 1_session-install-deps/setup-chroma.py
+    short_summary: Setup Chroma Vector DB
+    kernel: python3
+    cpu: 1
+    memory: 2
+
   - type: create_job
     name: XML Scrape (Step 1)
     entity_label: xml_scrape
@@ -134,11 +142,10 @@ tasks:
   - type: start_application
     name: CML Llama2 Chatbot Interface
     subdomain: cml-llama2-ui
-    script: 3_app/frontend_app.py
+    script: 3_app/llm_app.py
     short_summary: Create and start CML Llama2 frontend application
     long_summary: Create and start CML Llama2 frontend application. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external access to the UI.
     cpu: 2
-    memory: 16
-    gpu: 1
+    memory: 4
     environment_variables:
       TASK_TYPE: START_APPLICATION

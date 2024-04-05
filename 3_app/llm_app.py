@@ -10,17 +10,20 @@ import requests
 import json
 import time
 from typing import Optional
-from botocore.config import Config
 import chromadb
 from chromadb.utils import embedding_functions
-
 from huggingface_hub import hf_hub_download
+from model import *
 
 if os.getenv("VECTOR_DB") == "PINECONE":
     USE_PINECONE = True
+else:
+    USE_PINECONE = False
 if os.getenv("VECTOR_DB") == "CHROMA":
     USE_CHROMA = True 
-
+else:
+    USE_CHROMA = False
+    
 EMBEDDING_MODEL_REPO = "sentence-transformers/all-mpnet-base-v2"
 
 
@@ -68,22 +71,21 @@ if USE_CHROMA:
     current_collection_stats = collection.count()
     print('Total number of embeddings in Chroma DB index is ' + str(current_collection_stats))
     
+if os.getenv("USE_CML_MODELS") == "True" or os.getenv("USE_CML_MODELS") == True:
+    client = cmlapi.default_client(url=os.getenv("CDSW_API_URL").replace("/api/v1", ""), cml_api_key=os.getenv("CDSW_APIV2_KEY"))
+    ## Here we assume that only one model has been deployed in the project, if this is not true this should be adjusted (this is reflected by the placeholder 0 in the array)
+    model = client.list_models(project_id=os.getenv("CDSW_PROJECT_ID"))
+    print(model)
+    selected_model = model.models[0]
+
+    ## Save the access key for the model to the environment variable of this project
+    MODEL_ACCESS_KEY = selected_model.access_key
+
+    MODEL_ENDPOINT = os.getenv("CDSW_API_URL").replace("https://", "https://modelservice.").replace("/api/v1", "/model?accessKey=")
+    MODEL_ENDPOINT = MODEL_ENDPOINT + MODEL_ACCESS_KEY
+else:
+    print("CANNOT MAKE IT HERE")
     
-client = cmlapi.default_client(url=os.getenv("CDSW_API_URL").replace("/api/v1", ""), cml_api_key=os.getenv("CDSW_APIV2_KEY"))
-projects = client.list_projects(include_public_projects=True, search_filter=json.dumps({"name": "Intelligent QA Chatbot with   NiFi, Pinecone, and Llama2"}))
-project = projects.projects[0]
-
-## Here we assume that only one model has been deployed in the project, if this is not true this should be adjusted (this is reflected by the placeholder 0 in the array)
-model = client.list_models(project_id=project.id)
-selected_model = model.models[0]
-
-## Save the access key for the model to the environment variable of this project
-MODEL_ACCESS_KEY = selected_model.access_key
-
-MODEL_ENDPOINT = os.getenv("CDSW_API_URL").replace("https://", "https://modelservice.").replace("/api/v1", "/model?accessKey=")
-MODEL_ENDPOINT = MODEL_ENDPOINT + MODEL_ACCESS_KEY
-
-
 def main():
     # Configure gradio QA app 
     print("Configuring gradio app")
@@ -176,7 +178,7 @@ def get_responses(message, history, model, temperature, token_count, vector_db):
     
 
 def url_from_source(source):
-    url = source.replace('/home/cdsw/data/https:/', 'https://').replace('.txt', '.html')
+    url = source.replace('/home/cdsw/data/https:/', 'https://').replace('/home/cdsw/data/', 'https://').replace('.txt', '.html')
     return f"[Reference 1]({url})"
     
 

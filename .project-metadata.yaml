@@ -64,7 +64,7 @@ tasks:
   - type: run_session
     name: Setup Chroma Vector DB
     script: 1_session-install-deps/setup-chroma.py
-    short_summary: Setup Chroma Vector DB
+    short_summary: Setup Chroma Vector DB (will only run if Chroma is chosen as Vector DB)
     kernel: python3
     cpu: 1
     memory: 2
@@ -72,11 +72,11 @@ tasks:
   - type: create_job
     name: XML Scrape (Step 1)
     entity_label: xml_scrape
-    script: /USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/Python-based_sitemap_scrape/1_kb_xml_scrape.py
+    script: USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/Python-based_sitemap_scrape/1_kb_xml_scrape.py
     arguments: None
     short_summary: Scrape XML mapped in conf file.
     long_summary: Scrape XML mapped in conf file.
-    cpu: 2
+    cpu: 4
     memory: 8
     environment:
       TASK_TYPE: CREATE/RUN_JOB
@@ -84,11 +84,11 @@ tasks:
   - type: create_job
     name: HTML to TEXT (Step 2)
     entity_label: html_to_text
-    script: /USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/Python-based_sitemap_scrape/2_kb_html_to_text.py
+    script: USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/Python-based_sitemap_scrape/2_kb_html_to_text.py
     arguments: None
     short_summary: Download and convert htmls to text.
     long_summary: Download and convert htmls to text.
-    cpu: 2
+    cpu: 4
     memory: 8
     environment:
       TASK_TYPE: CREATE/RUN_JOB

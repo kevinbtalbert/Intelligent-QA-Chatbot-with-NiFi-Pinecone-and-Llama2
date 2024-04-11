@@ -166,13 +166,13 @@ def main():
     if os.getenv("VECTOR_DB") == "CHROMA":
         additional_inputs=[gr.Radio(['Local Llama 7B'], label="Select Foundational Model", value="Local Llama 7B"), 
                         gr.Slider(minimum=0.01, maximum=1.0, step=0.01, value=0.5, label="Select Temperature (Randomness of Response)"),
-                        gr.Radio(["50", "100", "250", "500", "1000"], label="Select Number of Tokens (Length of Response)", value="250"),
+                        gr.Radio(["50", "100", "250", "500", "1000"], label="Select Number of Tokens (Length of Response)", value="100"),
                         gr.Radio(['None', 'Chroma'], label="Vector Database Choices", value="Chroma")]
     
     if os.getenv("VECTOR_DB") == "PINECONE":
         additional_inputs=[gr.Radio(['Local Llama 7B'], label="Select Foundational Model", value="Local Llama 7B"), 
                             gr.Slider(minimum=0.01, maximum=1.0, step=0.01, value=0.5, label="Select Temperature (Randomness of Response)"),
-                            gr.Radio(["50", "100", "250", "500", "1000"], label="Select Number of Tokens (Length of Response)", value="250"),
+                            gr.Radio(["50", "100", "250", "500", "1000"], label="Select Number of Tokens (Length of Response)", value="100"),
                             gr.Radio(['None', 'Pinecone'], label="Vector Database Choices", value="Pinecone")]
         
     # Create the Gradio Interface

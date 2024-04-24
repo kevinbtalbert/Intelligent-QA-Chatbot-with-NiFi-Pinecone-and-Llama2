@@ -110,7 +110,7 @@ tasks:
     short_summary: Populate Vector DB with documents embeddings
 
   - type: create_model
-    name: Llama-2-7b
+    name: Create Llama2 model
     entity_label: llama-2-7b
     description: LLAMA-2-7B model hosted in CML. 
     short_summary: LLAMA-2-7B
@@ -123,7 +123,7 @@ tasks:
       num_replicas: 1
   
   - type: build_model
-    name: Build LLAMA 2 model
+    name: Build Llama2 model
     entity_label: llama-2-7b
     comment: First build by the AMP
     examples:

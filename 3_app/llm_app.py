@@ -33,7 +33,7 @@ if USE_PINECONE:
     PINECONE_INDEX = os.getenv('COLLECTION_NAME')
 
     print("initialising Pinecone connection...")
-    pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENVIRONMENT)
+    pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENVIRONMENT, source_tag='cloudera')
     print("Pinecone initialised")
 
     print(f"Getting '{PINECONE_INDEX}' as object...")

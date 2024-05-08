@@ -94,7 +94,7 @@ if os.getenv("VECTOR_DB") == "PINECONE":
         try:
             print("initialising Pinecone connection...")
             # Initialize the Pinecone connection with API key and environment.
-            pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENVIRONMENT)
+            pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENVIRONMENT, source_tag='cloudera')
             print("Pinecone initialised")
             
             # Create a Pinecone collection with the specified index name.

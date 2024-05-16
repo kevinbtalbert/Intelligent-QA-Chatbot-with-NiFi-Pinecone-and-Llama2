@@ -3,7 +3,6 @@ import gradio as gr
 import cmlapi
 from typing import Any, Union, Optional
 from pydantic import BaseModel
-import tensorflow as tf
 from sentence_transformers import SentenceTransformer
 import requests
 import json
